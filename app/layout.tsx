@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { cn } from '@/lib/utils'
 import { ModalProvider } from '@/components/providers/ModalProvider'
 import { SocketProvider } from '@/components/providers/SocketProvider'
+import { QueryProvider } from '@/components/providers/query-provider'
 
 
 
@@ -31,7 +32,9 @@ export default function RootLayout({
           >
             <SocketProvider>
             <ModalProvider/>
+            <QueryProvider>
               {children}
+            </QueryProvider>
             </SocketProvider>
           </ThemeProvider>
         </body>
