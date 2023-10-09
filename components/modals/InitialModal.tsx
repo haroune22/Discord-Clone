@@ -25,7 +25,7 @@ import { useForm } from 'react-hook-form'
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import  { FileUpload } from "../file-upload";
+import  { FileUpload } from "@/components/file-upload";
 import axios from "axios"
 import { useRouter } from "next/navigation";
 

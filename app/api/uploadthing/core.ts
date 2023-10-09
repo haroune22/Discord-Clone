@@ -1,10 +1,18 @@
 import { auth } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
- 
-const f = createUploadthing();
+import * as z from "zod";
+
+const f = createUploadthing({
+  errorFormatter: (err) => {
+    return {
+      message: err.message,
+      zodError: err.cause instanceof z.ZodError ? err.cause.flatten() : null,
+    };
+  },
+});
  
 const handleAuth = () => {
-  const { userId } = auth();
+  const userId  = auth();
   if (!userId) throw new Error("Unauthorized");
   return { userId: userId };
 }

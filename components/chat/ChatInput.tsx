@@ -16,6 +16,7 @@ import {
   } from "@/components/ui/form";
   import { Input } from "@/components/ui/input";
 import { useModal } from "@/hooks/use-model-store";
+import { EmojiPicker } from "../EmojiPicker";
 
 
 interface ChatInputProps {
@@ -76,9 +77,10 @@ export const ChatInput =  ({
                 <div className="relative p-4 pb-6">
                   <button
                     type="button"
+                    onClick={()=>onOpen('messageFile',{apiUrl,query})} 
                     className="absolute top-7 left-8 h-[24px] w-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center"
                   >
-                    <Plus onClick={()=>onOpen('messageFile',{apiUrl,query})} 
+                    <Plus 
                     className="text-white dark:text-[#313338]" />
                   </button>
                   <Input
@@ -88,9 +90,9 @@ export const ChatInput =  ({
                     {...field}
                   />
                   <div className="absolute top-7 right-8">
-                    {/* <EmojiPicker
+                    <EmojiPicker
                       onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)}
-                    /> */}
+                    />
                   </div>
                 </div>
               </FormControl>
