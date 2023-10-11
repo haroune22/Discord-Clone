@@ -5,7 +5,11 @@ import { ChatWelcome } from "./ChatWelcome";
 import { useChatQuery } from "@/hooks/use-chat-query";
 import { Loader2, ServerCrash } from "lucide-react";
 import { Fragment } from "react";
+import { ChatItem } from "./ChatItem";
+import { format } from 'date-fns'
 
+
+const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
 type MessageWithMemberWithProfile = Message & {
     member: Member & {
@@ -41,12 +45,13 @@ export const ChatMessages = ({
 
 
     const queryKey = `chat:${chatId}`;
+    
     const { 
         data,
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
-        status
+        status,
     } = useChatQuery({
             queryKey,
             apiUrl,
@@ -82,12 +87,22 @@ export const ChatMessages = ({
                 <ChatWelcome type={type} name={name} />
             </div>
             <div className="flex flex-col-reverse mt-auto ">
-              {data?.pages.map((group,i)=> (
+              {data?.pages?.map((group,i)=> (
                 <Fragment key={i}>
-                    {group.items.map((message:MessageWithMemberWithProfile)=>(
-                        <div key={message.id} className="">
-                            {message.content}
-                        </div>
+                    {group?.items?.map((message:MessageWithMemberWithProfile)=>(
+                       <ChatItem 
+                          key={message.id}
+                          member={message.member}
+                          id={message.id}
+                          currentMember={member}
+                          content={message.content}
+                          fileUrl={message.fileUrl}
+                          deleted={message.deleted}
+                          timestamp={format(new Date(message.createdAt),DATE_FORMAT)}
+                          isUpdated={message.updatedAt !== message.createdAt}
+                          socketUrl={socketUrl}
+                          socketQuery={socketQuery}
+                      />
                     ))}
                 </Fragment>
               ) )}  
